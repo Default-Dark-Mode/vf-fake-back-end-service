@@ -4,6 +4,8 @@ import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ public class AccountController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<VFFinancialAsset>> getAccounts(){
-		return new ResponseEntity<>(this.accountService.getAccounts(), HttpStatus.OK);
+	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(Pageable page){
+		return new ResponseEntity<>(this.accountService.getAccounts(page), HttpStatus.OK);
 	}
 }
