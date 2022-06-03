@@ -8,6 +8,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * This class maps to the representation of a
+ * financial transaction and related data in
+ * Vernal Financial's system.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @Entity
 @Table(name = "transactions")
 public class VFFinancialTransaction {
@@ -37,10 +44,28 @@ public class VFFinancialTransaction {
 	@NotNull
 	private LocalDateTime statusAt;
 
+	/**
+	 * The default constructor for the VFFinancialTransaction
+	 * class calls the parameterized constructor with null
+	 * values for all parameters.
+	 */
 	public VFFinancialTransaction() {
 		this(null, null, null, null, null, null, null);
 	}
 
+	/**
+	 * The parameterized constructor is the primary constructor
+	 * for the VFFinancialAsset class and will be called by any
+	 * other constructor within the class.
+	 *
+	 * @param origin      VFFinancialAsset where the money came from
+	 * @param destination VFFinancialAsset where the money is going
+	 * @param amount      VFMonetaryValue the amount of money
+	 * @param status      VFTransactionStatus the current status of the transaction
+	 * @param createdAt   LocalDateTime the timestamp for when the transaction was created
+	 * @param receivedAt  LocalDateTime the timestamp for when the transaction was received
+	 * @param statusAt    LocalDateTime the timestamp for when the transaction status changed
+	 */
 	public VFFinancialTransaction(VFFinancialAsset origin, VFFinancialAsset destination, VFMonetaryValue amount, VFTransactionStatus status, LocalDateTime createdAt, LocalDateTime receivedAt, LocalDateTime statusAt) {
 		this.recordType = VFRecordType.Transaction;
 		this.origin = origin;

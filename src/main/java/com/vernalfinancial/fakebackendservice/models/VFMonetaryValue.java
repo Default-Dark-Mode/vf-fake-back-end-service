@@ -6,6 +6,12 @@ import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * This class represents the currency value of
+ * some amount of money in US dollars and cents.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @Embeddable
 public class VFMonetaryValue implements Serializable, Comparable<VFMonetaryValue> {
 	@Min(value = 0, message = "Negative values must be expressed using the negative value indicator")
@@ -15,6 +21,11 @@ public class VFMonetaryValue implements Serializable, Comparable<VFMonetaryValue
 	@Max(value = 99, message = "Values exceeding $1 cannot be expressed in cents")
 	private Integer cents;
 
+	/**
+	 * The default constructor for the VFMonetaryValue
+	 * class calls the parameterized constructor with
+	 * null values for all the parameters.
+	 */
 	public VFMonetaryValue() {
 		this(0, 0);
 	}

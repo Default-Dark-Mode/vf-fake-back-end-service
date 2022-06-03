@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class maps to the representation of the
+ * statuses available to
+ */
 @Entity
 @Table(name = "transaction_statuses")
 public class VFTransactionStatus {
@@ -27,10 +31,23 @@ public class VFTransactionStatus {
 	@OneToMany(mappedBy = "id")
 	private List<VFFinancialTransaction> transaction;
 
+	/**
+	 * The default constructor for the VFTransactionStatus
+	 * class calls the parameterized constructor with null
+	 * values for all parameters.
+	 */
 	public VFTransactionStatus() {
-		this("new", "A new transaction status");
+		this(null, null);
 	}
 
+	/**
+	 * The parameterized constructor for the VFTransactionStatus
+	 * class is the primary constructor and will be called by any
+	 * other constructor in the class.
+	 *
+	 * @param name        String name of the status
+	 * @param description String description of the status
+	 */
 	public VFTransactionStatus(String name, String description) {
 		this.recordType = VFRecordType.TransactionStatus;
 		this.name = name;

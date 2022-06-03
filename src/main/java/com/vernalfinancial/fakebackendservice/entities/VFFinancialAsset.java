@@ -10,8 +10,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * This class maps to the database representations
+ * of a bank account within Vernal Financial's
+ * system and associated data and serves as the
+ * abstract base class for all account entities,
+ * which allows polymorphic account repository
+ * access throughout the system.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @Entity
-@Table(name="financial_assets")
+@Table(name = "financial_assets")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class VFFinancialAsset {
 	@Id
@@ -46,10 +56,26 @@ public abstract class VFFinancialAsset {
 	@NotNull
 	private LocalDateTime modifiedAt;
 
+	/**
+	 * The default constructor for the VFFinancialAsset
+	 * class calls the fully parameterized constructor
+	 * with null values for all parameters.
+	 */
 	public VFFinancialAsset() {
 		this(null, null, false, null, null);
 	}
 
+	/**
+	 * The parameterized constructor for the VFFinancialAsset
+	 * class is the primary constructor and will be called by
+	 * any other constructor within the class.
+	 *
+	 * @param id         String the unique id of the account
+	 * @param balance    VFBalance the current balance
+	 * @param closed     Boolean whether the account is closed
+	 * @param createdAt  LocalDateTime when the account was created
+	 * @param modifiedAt LocalDateTime when the account was last modified
+	 */
 	public VFFinancialAsset(String id, VFBalance balance, Boolean closed, LocalDateTime createdAt,
 							LocalDateTime modifiedAt) {
 		this.id = UUID.randomUUID().toString();

@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Random;
-
+/**
+ * This class manages the routing of traffic and
+ * parameters to the appropriate function within
+ * the AccountService.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @RestController
 @RequestMapping(path = "/accounts")
 @Slf4j
@@ -22,12 +24,20 @@ import java.util.Random;
 public class AccountController {
 	private final AccountService accountService;
 
+	/**
+	 * This method seed the database with the specified
+	 * or a random number of accounts, randomly made
+	 * either a SavingsAccount or a CheckingAccount.
+	 *
+	 * @param count Integer the number of accounts to seed
+	 * @return ResponseEntity<Boolean> response entity and success indicator
+	 */
 	@GetMapping(path = "/seed")
-	public ResponseEntity<Boolean> seedAccounts(@RequestParam(name = "count", required = false)Integer count){
+	public ResponseEntity<Boolean> seedAccounts(@RequestParam(name = "count", required = false) Integer count) {
 		Boolean result = accountService.seedAccounts(count);
 		ResponseEntity<Boolean> response;
 
-		if(result){
+		if (result) {
 			response = new ResponseEntity<>(result, HttpStatus.CREATED);
 		} else {
 			response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,8 +46,15 @@ public class AccountController {
 		return response;
 	}
 
+	/**
+	 * This method receives get requests at the /accounts
+	 * path and returns a page of accounts.
+	 *
+	 * @param page Pageable page request specifications
+	 * @return ResponseEntity<Page < VFFinancialAsset>> results
+	 */
 	@GetMapping
-	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(Pageable page){
+	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(Pageable page) {
 		return new ResponseEntity<>(this.accountService.getAccounts(page), HttpStatus.OK);
 	}
 }

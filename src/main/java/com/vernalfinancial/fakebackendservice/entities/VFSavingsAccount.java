@@ -10,6 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * This class maps to the database representations
+ * of a savings account within Vernal Financial's
+ * system and associated data.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @Entity
 @Table(name = "savings_accounts")
 public class VFSavingsAccount extends VFFinancialAsset {
@@ -24,12 +31,31 @@ public class VFSavingsAccount extends VFFinancialAsset {
 	@AttributeOverrides({@AttributeOverride(name = "dollars", column = @Column(name = "insufficient_funds_fee_dollars")), @AttributeOverride(name = "cents", column = @Column(name = "insufficient_funds_fee_cents"))})
 	private VFMonetaryValue insufficientFundsFee;
 
+	/**
+	 * The default constructor for the VFSavingsAccount
+	 * entity calls the fully parameterized constructor
+	 * with null values for all parameters.
+	 */
 	public VFSavingsAccount() {
 		this(null, null, null, null, null, null, null, null);
 	}
 
+	/**
+	 * The parameterized constructor for the VFSavingsAccount
+	 * entity is the primary constructor and will be called by
+	 * any other constructor within the class.
+	 *
+	 * @param id                   String the unique id of the account
+	 * @param balance              VFBalance the current balance
+	 * @param closed               Boolean whether the account is closed
+	 * @param createdAt            LocalDateTime when the account was created
+	 * @param modifiedAt           LocalDateTime when the account was last modified
+	 * @param annualPercentageRate the annual percentage rate of the interest
+	 * @param minimumBalance       VFBalance the minimum acceptable balance
+	 * @param insufficientFundsFee VFMonetaryValue the amount of insufficient funds fees
+	 */
 	public VFSavingsAccount(String id, VFBalance balance, Boolean closed, LocalDateTime createdAt,
-							LocalDateTime modifiedAt,	Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
+							LocalDateTime modifiedAt, Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
 		super(id, balance, closed, createdAt, modifiedAt);
 		this.annualPercentageRate = annualPercentageRate;
 		this.minimumBalance = minimumBalance;
