@@ -6,6 +6,7 @@ import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,10 +16,13 @@ public class VFSavingsAccount extends VFFinancialAsset {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
 	private Integer annualPercentageRate;
+	@NotNull
 	@Embedded
 	@AttributeOverrides({@AttributeOverride(name = "negative", column = @Column(name = "minimum_balance_negative")), @AttributeOverride(name = "amount.dollars", column = @Column(name = "minimum_balance_dollars")), @AttributeOverride(name = "amount.cents", column = @Column(name = "minimum_balance_cents"))})
 	private VFBalance minimumBalance;
+	@NotNull
 	@Embedded
 	@AttributeOverrides({@AttributeOverride(name = "dollars", column = @Column(name = "insufficient_funds_fee_dollars")), @AttributeOverride(name = "cents", column = @Column(name = "insufficient_funds_fee_cents"))})
 	private VFMonetaryValue insufficientFundsFee;
@@ -76,6 +80,8 @@ public class VFSavingsAccount extends VFFinancialAsset {
 
 	@Override
 	public String toString() {
-		return "VFSavingsAccount{" + "id=" + id + ", annualPercentageRate=" + annualPercentageRate + ", minimumBalance=" + minimumBalance + ", insufficientFundsFee=" + insufficientFundsFee + '}';
+		return "savings_account{" + "id=" + id + ", annual_percentage_rate=" + annualPercentageRate + ", " +
+				"minimum_balance" +
+				"=" + minimumBalance + ", insufficient_funds_fee=" + insufficientFundsFee + '}';
 	}
 }

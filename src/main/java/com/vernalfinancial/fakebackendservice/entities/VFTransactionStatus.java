@@ -1,6 +1,7 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,8 @@ public class VFTransactionStatus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
+	private VFRecordType recordType;
 	@NotNull
 	private String name;
 	@NotNull
@@ -29,6 +32,7 @@ public class VFTransactionStatus {
 	}
 
 	public VFTransactionStatus(String name, String description) {
+		this.recordType = VFRecordType.TransactionStatus;
 		this.name = name;
 		this.description = description;
 		this.createdAt = LocalDateTime.now();
@@ -81,6 +85,7 @@ public class VFTransactionStatus {
 
 	@Override
 	public String toString() {
-		return "VFTransactionStatus{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", createdAt=" + createdAt + '}';
+		return "transaction_status{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", created_at=" + createdAt + '}';
+
 	}
 }

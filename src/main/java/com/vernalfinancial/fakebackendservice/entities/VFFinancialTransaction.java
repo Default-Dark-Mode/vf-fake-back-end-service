@@ -1,8 +1,10 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,18 +14,27 @@ public class VFFinancialTransaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
+	private VFRecordType recordType;
+	@NotNull
 	@ManyToOne
 	private VFFinancialAsset origin;
+	@NotNull
 	@ManyToOne
 	private VFFinancialAsset destination;
+	@NotNull
 	@Embedded
 	private VFMonetaryValue amount;
+	@NotNull
 	@ManyToOne
 	@JoinTable(name = "transaction_statuses")
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private VFTransactionStatus status;
+	@NotNull
 	private LocalDateTime createdAt;
+	@NotNull
 	private LocalDateTime receivedAt;
+	@NotNull
 	private LocalDateTime statusAt;
 
 	public VFFinancialTransaction() {
@@ -31,6 +42,7 @@ public class VFFinancialTransaction {
 	}
 
 	public VFFinancialTransaction(VFFinancialAsset origin, VFFinancialAsset destination, VFMonetaryValue amount, VFTransactionStatus status, LocalDateTime createdAt, LocalDateTime receivedAt, LocalDateTime statusAt) {
+		this.recordType = VFRecordType.Transaction;
 		this.origin = origin;
 		this.destination = destination;
 		this.amount = amount;
@@ -119,6 +131,7 @@ public class VFFinancialTransaction {
 
 	@Override
 	public String toString() {
-		return "VFFinancialTransaction{" + "id=" + id + ", origin=" + origin + ", destination=" + destination + ", amount=" + amount + ", status=" + status + ", createdAt=" + createdAt + ", receivedAt=" + receivedAt + ", statusAt=" + statusAt + '}';
+		return "financial_transaction{" + "id=" + id + ", origin=" + origin + ", destination=" + destination + ", " +
+				"amount=" + amount + ", status=" + status + ", created_at=" + createdAt + ", received_at=" + receivedAt + ", status_at=" + statusAt + '}';
 	}
 }

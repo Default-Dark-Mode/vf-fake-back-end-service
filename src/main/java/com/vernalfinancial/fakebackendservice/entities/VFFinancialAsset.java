@@ -4,6 +4,7 @@ import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,7 @@ public abstract class VFFinancialAsset {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@NotNull
 	private VFRecordType recordType;
 	@Embedded
 	@AttributeOverrides({
@@ -31,13 +33,19 @@ public abstract class VFFinancialAsset {
 					column = @Column(name = "balance_cents")
 			)
 	})
+	@NotNull
 	private VFBalance balance;
+	@NotNull
 	private Boolean closed;
+	@NotNull
 	@OneToMany(mappedBy = "origin")
 	private List<VFFinancialTransaction> outgoingTransactions;
+	@NotNull
 	@OneToMany(mappedBy = "destination")
 	private List<VFFinancialTransaction> incomingTransactions;
+	@NotNull
 	private LocalDateTime createdAt;
+	@NotNull
 	private LocalDateTime modifiedAt;
 
 	public VFFinancialAsset() {
@@ -45,7 +53,7 @@ public abstract class VFFinancialAsset {
 	}
 
 	public VFFinancialAsset(VFBalance balance, Boolean closed, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-		this.recordType = VFRecordType.Unknown;
+		this.recordType = VFRecordType.UnknownAsset;
 		this.balance = balance;
 		this.closed = closed;
 		this.createdAt = createdAt;
@@ -115,15 +123,15 @@ public abstract class VFFinancialAsset {
 
 	@Override
 	public String toString() {
-		return "VFFinancialAsset{" +
+		return "financial_asset{" +
 				"id=" + id +
-				", type=" + recordType +
+				", record_type=" + recordType +
 				", balance=" + balance +
 				", closed=" + closed +
-				", outgoingTransactions=" + outgoingTransactions +
-				", incomingTransactions=" + incomingTransactions +
-				", createdAt=" + createdAt +
-				", modifiedAt=" + modifiedAt +
+				", outgoing_transactions=" + outgoingTransactions +
+				", incoming_transactions=" + incomingTransactions +
+				", created_at=" + createdAt +
+				", modified_at=" + modifiedAt +
 				'}';
 	}
 }

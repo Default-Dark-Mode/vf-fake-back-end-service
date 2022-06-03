@@ -1,7 +1,9 @@
 package com.vernalfinancial.fakebackendservice.models;
 
 public enum VFRecordType {
-	Unknown,
+	UnknownAsset,
 	SavingsAccount,
-	CheckingAccount
+	CheckingAccount,
+	Transaction,
+	TransactionStatus
 }
