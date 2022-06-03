@@ -6,11 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/accounts")
@@ -18,6 +19,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 	private final AccountService accountService;
+
+	@GetMapping(path = "/seed")
+	public ResponseEntity<Boolean> seedAccounts(@RequestParam(name = "count", required = false)Integer count){
+		Boolean result = accountService.seedAccounts(count);
+		ResponseEntity<Boolean> response;
+
+		if(result){
+			response = new ResponseEntity<>(result, HttpStatus.CREATED);
+		} else {
+			response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return response;
+	}
 
 	@GetMapping
 	public ResponseEntity<List<VFFinancialAsset>> getAccounts(){
