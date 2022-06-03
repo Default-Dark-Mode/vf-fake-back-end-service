@@ -2,6 +2,7 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class VFCheckingAccount extends VFFinancialAsset{
 		this.id = id;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
+		this.setType(VFRecordType.CheckingAccount);
 	}
 
 	@Override

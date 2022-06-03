@@ -3,6 +3,7 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class VFSavingsAccount extends VFFinancialAsset {
 		this.annualPercentageRate = annualPercentageRate;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
+		this.setType(VFRecordType.SavingsAccount);
 	}
 
 	public Integer getAnnualPercentageRate() {

@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public abstract class VFFinancialAsset {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	private VFRecordType type;
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(
@@ -42,6 +44,7 @@ public abstract class VFFinancialAsset {
 	}
 
 	public VFFinancialAsset(VFBalance balance, Boolean closed, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+		this.type = VFRecordType.Unknown;
 		this.balance = balance;
 		this.closed = closed;
 		this.createdAt = createdAt;
@@ -54,6 +57,14 @@ public abstract class VFFinancialAsset {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public VFRecordType getType() {
+		return type;
+	}
+
+	public void setType(VFRecordType type) {
+		this.type = type;
 	}
 
 	public VFBalance getBalance() {
@@ -93,20 +104,23 @@ public abstract class VFFinancialAsset {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		VFFinancialAsset that = (VFFinancialAsset) o;
-		return Objects.equals(getId(), that.getId()) && isClosed() == that.isClosed() && Objects.equals(getBalance(), that.getBalance()) && Objects.equals(getCreatedAt(), that.getCreatedAt()) && Objects.equals(getModifiedAt(), that.getModifiedAt());
+		return Objects.equals(getId(), that.getId()) && getType() == that.getType() && Objects.equals(getBalance(), that.getBalance()) && Objects.equals(closed, that.closed) && Objects.equals(outgoingTransactions, that.outgoingTransactions) && Objects.equals(incomingTransactions, that.incomingTransactions) && Objects.equals(getCreatedAt(), that.getCreatedAt()) && Objects.equals(getModifiedAt(), that.getModifiedAt());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getBalance(), isClosed(), getCreatedAt(), getModifiedAt());
+		return Objects.hash(getId(), getType(), getBalance(), closed, outgoingTransactions, incomingTransactions, getCreatedAt(), getModifiedAt());
 	}
 
 	@Override
 	public String toString() {
 		return "VFFinancialAsset{" +
 				"id=" + id +
+				", type=" + type +
 				", balance=" + balance +
 				", closed=" + closed +
+				", outgoingTransactions=" + outgoingTransactions +
+				", incomingTransactions=" + incomingTransactions +
 				", createdAt=" + createdAt +
 				", modifiedAt=" + modifiedAt +
 				'}';
