@@ -12,9 +12,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "checking_accounts")
 public class VFCheckingAccount extends VFFinancialAsset{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	@NotNull
 	@Embedded
 	@AttributeOverrides({@AttributeOverride(name = "negative", column = @Column(name = "minimum_balance_negative")), @AttributeOverride(name = "amount.dollars", column = @Column(name = "minimum_balance_dollars")), @AttributeOverride(name = "amount.cents", column = @Column(name = "minimum_balance_cents"))})
@@ -28,22 +25,12 @@ public class VFCheckingAccount extends VFFinancialAsset{
 		this(null, null, null, null, null, null, null);
 	}
 
-	public VFCheckingAccount(VFBalance balance, Boolean closed, LocalDateTime createdAt, LocalDateTime modifiedAt, Integer id, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
-		super(balance, closed, createdAt, modifiedAt);
-		this.id = id;
+	public VFCheckingAccount(String id, VFBalance balance, Boolean closed, LocalDateTime createdAt,
+							 LocalDateTime modifiedAt, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
+		super(id, balance, closed, createdAt, modifiedAt);
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
 		this.setRecordType(VFRecordType.CheckingAccount);
-	}
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public VFBalance getMinimumBalance() {
@@ -79,7 +66,7 @@ public class VFCheckingAccount extends VFFinancialAsset{
 	@Override
 	public String toString() {
 		return "checking_account{" +
-				"id=" + id +
+				"id=" + this.getId() +
 				", minimum_balance=" + minimumBalance +
 				", insufficient_funds_fee=" + insufficientFundsFee +
 				'}';

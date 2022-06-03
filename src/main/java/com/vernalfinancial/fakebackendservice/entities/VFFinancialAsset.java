@@ -8,14 +8,14 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name="financial_assets")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class VFFinancialAsset {
 	@Id
-	@GeneratedValue
-	private Integer id;
+	private String id;
 	@NotNull
 	private VFRecordType recordType;
 	@Embedded
@@ -37,10 +37,8 @@ public abstract class VFFinancialAsset {
 	private VFBalance balance;
 	@NotNull
 	private Boolean closed;
-	@NotNull
 	@OneToMany(mappedBy = "origin")
 	private List<VFFinancialTransaction> outgoingTransactions;
-	@NotNull
 	@OneToMany(mappedBy = "destination")
 	private List<VFFinancialTransaction> incomingTransactions;
 	@NotNull
@@ -49,10 +47,12 @@ public abstract class VFFinancialAsset {
 	private LocalDateTime modifiedAt;
 
 	public VFFinancialAsset() {
-		this(null, false, null, null);
+		this(null, null, false, null, null);
 	}
 
-	public VFFinancialAsset(VFBalance balance, Boolean closed, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+	public VFFinancialAsset(String id, VFBalance balance, Boolean closed, LocalDateTime createdAt,
+							LocalDateTime modifiedAt) {
+		this.id = UUID.randomUUID().toString();
 		this.recordType = VFRecordType.UnknownAsset;
 		this.balance = balance;
 		this.closed = closed;
@@ -60,11 +60,11 @@ public abstract class VFFinancialAsset {
 		this.modifiedAt = modifiedAt;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -13,9 +13,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "savings_accounts")
 public class VFSavingsAccount extends VFFinancialAsset {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	@NotNull
 	private Integer annualPercentageRate;
 	@NotNull
@@ -31,9 +28,9 @@ public class VFSavingsAccount extends VFFinancialAsset {
 		this(null, null, null, null, null, null, null, null);
 	}
 
-	public VFSavingsAccount(VFBalance balance, Boolean closed, LocalDateTime createdAt, LocalDateTime modifiedAt, Integer id, Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
-		super(balance, closed, createdAt, modifiedAt);
-		this.id = id;
+	public VFSavingsAccount(String id, VFBalance balance, Boolean closed, LocalDateTime createdAt,
+							LocalDateTime modifiedAt,	Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
+		super(id, balance, closed, createdAt, modifiedAt);
 		this.annualPercentageRate = annualPercentageRate;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
@@ -80,7 +77,7 @@ public class VFSavingsAccount extends VFFinancialAsset {
 
 	@Override
 	public String toString() {
-		return "savings_account{" + "id=" + id + ", annual_percentage_rate=" + annualPercentageRate + ", " +
+		return "savings_account{" + "id=" + this.getId() + ", annual_percentage_rate=" + annualPercentageRate + ", " +
 				"minimum_balance" +
 				"=" + minimumBalance + ", insufficient_funds_fee=" + insufficientFundsFee + '}';
 	}
