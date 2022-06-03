@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.controllers;
 
+import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,8 @@ import java.util.List;
 public class AccountController {
 	private final AccountService accountService;
 
-//	@GetMapping
-//	public ResponseEntity<List<VFAccount>> getAccounts(){
-//		return new ResponseEntity<>(this.accountService.getAccounts(), HttpStatus.OK);
-//	}
+	@GetMapping
+	public ResponseEntity<List<VFFinancialAsset>> getAccounts(){
+		return new ResponseEntity<>(this.accountService.getAccounts(), HttpStatus.OK);
+	}
 }
