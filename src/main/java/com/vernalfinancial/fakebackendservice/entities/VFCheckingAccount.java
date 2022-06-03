@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CheckingAccounts")
+@Table(name = "checking_accounts")
 public class VFCheckingAccount extends VFFinancialAsset{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class VFCheckingAccount extends VFFinancialAsset{
 		this.id = id;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
-		this.setType(VFRecordType.CheckingAccount);
+		this.setRecordType(VFRecordType.CheckingAccount);
 	}
 
 	@Override

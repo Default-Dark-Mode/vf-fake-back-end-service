@@ -33,7 +33,7 @@ public class VFSavingsAccount extends VFFinancialAsset {
 		this.annualPercentageRate = annualPercentageRate;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
-		this.setType(VFRecordType.SavingsAccount);
+		this.setRecordType(VFRecordType.SavingsAccount);
 	}
 
 	public Integer getAnnualPercentageRate() {
