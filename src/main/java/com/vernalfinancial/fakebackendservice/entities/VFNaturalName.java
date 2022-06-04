@@ -1,5 +1,7 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -18,6 +20,8 @@ public class VFNaturalName {
 	private Integer id;
 	@NotNull
 	private String name;
+	@Embedded
+	private VFRecordType recordType;
 
 	/**
 	 * The default constructor for the VFNaturalName
@@ -36,6 +40,7 @@ public class VFNaturalName {
 	 * @param name String the natural name
 	 */
 	public VFNaturalName(String name) {
+		this.recordType = VFRecordType.PersonalName;
 		this.name = name;
 	}
 
@@ -55,17 +60,25 @@ public class VFNaturalName {
 		this.name = name;
 	}
 
+	public VFRecordType getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(VFRecordType recordType) {
+		this.recordType = recordType;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		VFNaturalName that = (VFNaturalName) o;
-		return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
+		return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && getRecordType() == that.getRecordType();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName());
+		return Objects.hash(getId(), getName(), getRecordType());
 	}
 
 	@Override
@@ -73,6 +86,7 @@ public class VFNaturalName {
 		return "natural_name{" +
 				"id=" + id +
 				", name='" + name + '\'' +
+				", record_type=" + recordType +
 				'}';
 	}
 }

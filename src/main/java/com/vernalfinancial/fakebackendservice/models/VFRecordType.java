@@ -20,5 +20,7 @@ public enum VFRecordType {
 	TransactionStatus,
 	Identity,
 	Person,
-	Organization
+	Organization,
+	PersonalName,
+	OrganizationalName
 }
