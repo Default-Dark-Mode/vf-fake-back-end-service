@@ -1,5 +1,7 @@
 package com.vernalfinancial.fakebackendservice.models;
 
+import javax.persistence.Embeddable;
+
 /**
  * This class represents the type of a given
  * record in the database and can be used to
@@ -9,10 +11,14 @@ package com.vernalfinancial.fakebackendservice.models;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@Embeddable
 public enum VFRecordType {
 	UnknownAsset,
 	SavingsAccount,
 	CheckingAccount,
 	Transaction,
-	TransactionStatus
+	TransactionStatus,
+	Identity,
+	Person,
+	Organization
 }
