@@ -27,5 +27,8 @@ public enum VFRecordType {
 	EmailAddress,
 	PhoneNumber,
 	PhysicalAddress,
-	ContactInformation
+	ContactInformation,
+	FinancialCard,
+	ATMCard,
+	DebitCard
 }
