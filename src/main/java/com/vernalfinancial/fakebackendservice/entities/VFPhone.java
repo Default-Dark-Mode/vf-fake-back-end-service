@@ -23,15 +23,15 @@ public class VFPhone {
 	private VFRecordType recordType;
 	@NotNull
 	private Boolean mobile;
-	@Pattern(regexp = "\\d{1,4}")
+	@Pattern(regexp = "^\\d{1,4}$")
 	private String countryCode;
-	@Pattern(regexp = "\\d{3}")
+	@Pattern(regexp = "^\\d{3}$")
 	private String areaCode;
-	@Pattern(regexp = "\\d{3}")
+	@Pattern(regexp = "^\\d{3}$")
 	private String prefix;
-	@Pattern(regexp = "\\d{4}")
+	@Pattern(regexp = "^\\d{4}$")
 	private String line;
-	@Pattern(regexp = "\\d{0,5}")
+	@Pattern(regexp = "^\\d{0,5}$")
 	private String extension;
 
 	/**
