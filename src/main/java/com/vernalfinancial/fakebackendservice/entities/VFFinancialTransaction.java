@@ -15,6 +15,7 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "transactions")
 public class VFFinancialTransaction {

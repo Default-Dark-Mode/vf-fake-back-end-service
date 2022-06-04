@@ -15,6 +15,7 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "login_credentials")
 public class VFLoginCredentials {

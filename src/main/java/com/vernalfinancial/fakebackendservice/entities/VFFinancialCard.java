@@ -9,6 +9,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * This class serves as the abstract base class for
+ * automatic teller machine cards, credit cards, and
+ * debit cards in Vernal Financial's systems.
+ *
+ * @author Matthew.Crowell1@gmail.com
+ */
 @Entity
 @Table(name = "financial_cards")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

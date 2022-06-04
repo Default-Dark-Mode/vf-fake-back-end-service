@@ -15,12 +15,10 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "people")
 public class VFPerson extends VFIdentity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
 	@Embedded
 	private VFRecordType recordType;
 	@ManyToMany
@@ -55,12 +53,14 @@ public class VFPerson extends VFIdentity {
 		this.associatedNames = associatedNames;
 	}
 
-	public String getId() {
-		return id;
+	@Override
+	public VFRecordType getRecordType() {
+		return recordType;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	@Override
+	public void setRecordType(VFRecordType recordType) {
+		this.recordType = recordType;
 	}
 
 	public List<VFNaturalName> getNames() {
@@ -103,7 +103,7 @@ public class VFPerson extends VFIdentity {
 	@Override
 	public String toString() {
 		return "person{" +
-				"id=" + id +
+				"id=" + super.getId() +
 				", names=" + names +
 				", date_of_birth=" + dateOfBirth +
 				", associated_names=" + associatedNames +

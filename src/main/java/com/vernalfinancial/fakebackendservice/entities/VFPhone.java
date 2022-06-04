@@ -13,6 +13,7 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "phone_numbers")
 public class VFPhone {

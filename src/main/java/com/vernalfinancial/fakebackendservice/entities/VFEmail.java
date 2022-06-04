@@ -14,6 +14,7 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "emails")
 public class VFEmail {

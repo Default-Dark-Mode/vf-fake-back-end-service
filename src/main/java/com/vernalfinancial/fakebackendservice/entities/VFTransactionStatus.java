@@ -13,13 +13,14 @@ import java.util.Objects;
  * This class maps to the representation of the
  * statuses available to
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "transaction_statuses")
 public class VFTransactionStatus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotNull
+	@Embedded
 	private VFRecordType recordType;
 	@NotNull
 	private String name;

@@ -14,11 +14,10 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "organizations")
 public class VFOrganization extends VFIdentity {
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
 	@Embedded
 	private VFRecordType recordType;
 	@ManyToMany
@@ -48,14 +47,6 @@ public class VFOrganization extends VFIdentity {
 		this.recordType = VFRecordType.Organization;
 		this.organizationalNames = organizationalNames;
 		this.organizationType = organizationType;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public List<VFOrganizationalName> getOrganizationalNames() {
@@ -91,8 +82,7 @@ public class VFOrganization extends VFIdentity {
 	@Override
 	public String toString() {
 		return "organization{" +
-				"id='" + id + '\'' +
-				", record_type=" + recordType +
+				" record_type=" + recordType +
 				", organizational_names=" + organizationalNames +
 				", organization_type=" + organizationType +
 				'}';

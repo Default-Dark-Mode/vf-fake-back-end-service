@@ -13,6 +13,7 @@ import java.util.Objects;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "addresses")
 public class VFAddress {
@@ -30,7 +31,7 @@ public class VFAddress {
 	private String county;
 	@Pattern(regexp = "^[A-Z]{2}$")
 	private String state;
-	@Pattern(regexp = "^[a-zA-Z-{1}\\s{1}]+$")
+	@Pattern(regexp = "^[a-zA-Z]+([a-zA-Z-\\s]*)$")
 	private String country;
 	@Pattern(regexp = "^\\d{5}(-\\d{4})?$")
 	private String postalCode;

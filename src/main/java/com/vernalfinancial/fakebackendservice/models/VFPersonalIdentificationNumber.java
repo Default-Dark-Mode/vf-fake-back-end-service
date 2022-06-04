@@ -1,6 +1,7 @@
 package com.vernalfinancial.fakebackendservice.models;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
 import java.util.Random;
@@ -12,6 +13,8 @@ import java.util.Random;
  *
  * @author Matthew.Crowell1@gmail.com
  */
+@SuppressWarnings("JpaDataSourceORMInspection")
+@Embeddable
 public class VFPersonalIdentificationNumber {
 	@Column(name = "pin")
 	@Pattern(regexp = "^\\d{4}$")
