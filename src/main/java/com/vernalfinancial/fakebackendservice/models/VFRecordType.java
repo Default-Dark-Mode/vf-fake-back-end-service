@@ -22,5 +22,6 @@ public enum VFRecordType {
 	Person,
 	Organization,
 	PersonalName,
-	OrganizationalName
+	OrganizationalName,
+	LoginCredentials
 }
