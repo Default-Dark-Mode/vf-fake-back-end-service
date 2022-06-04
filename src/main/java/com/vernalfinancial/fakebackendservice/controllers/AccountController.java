@@ -2,8 +2,10 @@ package com.vernalfinancial.fakebackendservice.controllers;
 
 import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.services.AccountService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -54,7 +56,8 @@ public class AccountController {
 	 * @return ResponseEntity<Page < VFFinancialAsset>> results
 	 */
 	@GetMapping
-	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(Pageable page) {
+	@PageableAsQueryParam
+	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(@Parameter(hidden = true) Pageable page) {
 		return new ResponseEntity<>(this.accountService.getAccounts(page), HttpStatus.OK);
 	}
 }
