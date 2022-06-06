@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.*;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ import java.util.Objects;
 @Table(name = "debit_cards")
 public class VFDebitCard extends VFFinancialCard {
 	@ManyToOne
+	@JoinColumn(name = "source_id")
+	@JsonManagedReference
 	private VFCheckingAccount source;
 	@Embedded
 	private VFPersonalIdentificationNumber pin;

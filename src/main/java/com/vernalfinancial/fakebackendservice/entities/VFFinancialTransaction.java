@@ -1,12 +1,13 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * This class maps to the representation of a
@@ -25,15 +26,20 @@ public class VFFinancialTransaction {
 	private VFRecordType recordType;
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "origin_id", nullable = false)
+	@JsonBackReference
 	private VFFinancialAsset origin;
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "destination_id", nullable = false)
+	@JsonBackReference
 	private VFFinancialAsset destination;
 	@NotNull
 	@Embedded
 	private VFMonetaryValue amount;
 	@NotNull
 	@ManyToOne
+	@JsonManagedReference
 	@JoinTable(name = "transaction_statuses")
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private VFTransactionStatus status;
@@ -83,6 +89,14 @@ public class VFFinancialTransaction {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public VFRecordType getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(VFRecordType recordType) {
+		this.recordType = recordType;
 	}
 
 	public VFFinancialAsset getOrigin() {
@@ -139,24 +153,5 @@ public class VFFinancialTransaction {
 
 	public void setStatusAt(LocalDateTime statusAt) {
 		this.statusAt = statusAt;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		VFFinancialTransaction that = (VFFinancialTransaction) o;
-		return Objects.equals(getId(), that.getId()) && Objects.equals(getOrigin(), that.getOrigin()) && Objects.equals(getDestination(), that.getDestination()) && Objects.equals(getAmount(), that.getAmount()) && Objects.equals(getStatus(), that.getStatus()) && Objects.equals(getCreatedAt(), that.getCreatedAt()) && Objects.equals(getReceivedAt(), that.getReceivedAt()) && Objects.equals(getStatusAt(), that.getStatusAt());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId(), getOrigin(), getDestination(), getAmount(), getStatus(), getCreatedAt(), getReceivedAt(), getStatusAt());
-	}
-
-	@Override
-	public String toString() {
-		return "financial_transaction{" + "id=" + id + ", origin=" + origin + ", destination=" + destination + ", " +
-				"amount=" + amount + ", status=" + status + ", created_at=" + createdAt + ", received_at=" + receivedAt + ", status_at=" + statusAt + '}';
 	}
 }

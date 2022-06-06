@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -46,8 +48,10 @@ public abstract class VFFinancialAsset {
 	private VFBalance balance;
 	@NotNull
 	private Boolean closed;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "origin")
 	private List<VFFinancialTransaction> outgoingTransactions;
+	@JsonManagedReference
 	@OneToMany(mappedBy = "destination")
 	private List<VFFinancialTransaction> incomingTransactions;
 	@NotNull
@@ -131,32 +135,5 @@ public abstract class VFFinancialAsset {
 
 	public void setModifiedAt(LocalDateTime modifiedAt) {
 		this.modifiedAt = modifiedAt;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		VFFinancialAsset that = (VFFinancialAsset) o;
-		return Objects.equals(getId(), that.getId()) && getRecordType() == that.getRecordType() && Objects.equals(getBalance(), that.getBalance()) && Objects.equals(closed, that.closed) && Objects.equals(outgoingTransactions, that.outgoingTransactions) && Objects.equals(incomingTransactions, that.incomingTransactions) && Objects.equals(getCreatedAt(), that.getCreatedAt()) && Objects.equals(getModifiedAt(), that.getModifiedAt());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId(), getRecordType(), getBalance(), closed, outgoingTransactions, incomingTransactions, getCreatedAt(), getModifiedAt());
-	}
-
-	@Override
-	public String toString() {
-		return "financial_asset{" +
-				"id=" + id +
-				", record_type=" + recordType +
-				", balance=" + balance +
-				", closed=" + closed +
-				", outgoing_transactions=" + outgoingTransactions +
-				", incoming_transactions=" + incomingTransactions +
-				", created_at=" + createdAt +
-				", modified_at=" + modifiedAt +
-				'}';
 	}
 }

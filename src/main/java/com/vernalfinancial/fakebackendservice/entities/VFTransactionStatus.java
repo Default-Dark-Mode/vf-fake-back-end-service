@@ -1,6 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 
 import javax.persistence.*;
@@ -27,9 +29,9 @@ public class VFTransactionStatus {
 	private String description;
 	@NotNull
 	private LocalDateTime createdAt;
-	@JsonIgnore
-	@OneToMany(mappedBy = "id")
-	private List<VFFinancialTransaction> transaction;
+	@JsonBackReference
+	@OneToMany(mappedBy = "status")
+	private List<VFFinancialTransaction> transactions;
 
 	/**
 	 * The default constructor for the VFTransactionStatus
@@ -63,6 +65,14 @@ public class VFTransactionStatus {
 		this.id = id;
 	}
 
+	public VFRecordType getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(VFRecordType recordType) {
+		this.recordType = recordType;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -85,6 +95,14 @@ public class VFTransactionStatus {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public List<VFFinancialTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<VFFinancialTransaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	@Override

@@ -21,7 +21,6 @@ public class VFOrganization extends VFIdentity {
 	private VFRecordType recordType;
 	@ManyToMany
 	private List<VFOrganizationalName> organizationalNames;
-	@Embedded
 	private VFOrganizationType organizationType;
 
 	/**

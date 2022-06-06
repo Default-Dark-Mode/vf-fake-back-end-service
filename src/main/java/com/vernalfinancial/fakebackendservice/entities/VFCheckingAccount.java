@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class maps to the database representations
@@ -28,6 +30,9 @@ public class VFCheckingAccount extends VFFinancialAsset {
 	@Embedded
 	@AttributeOverrides({@AttributeOverride(name = "dollars", column = @Column(name = "insufficient_funds_fee_dollars")), @AttributeOverride(name = "cents", column = @Column(name = "insufficient_funds_fee_cents"))})
 	private VFMonetaryValue insufficientFundsFee;
+	@OneToMany(mappedBy = "source")
+	@JsonBackReference
+	private Set<VFDebitCard> debitCards;
 
 	/**
 	 * The default constructor for the VFCheckingAccount
