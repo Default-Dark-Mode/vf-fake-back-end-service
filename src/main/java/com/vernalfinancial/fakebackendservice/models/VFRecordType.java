@@ -11,7 +11,6 @@ import javax.persistence.Embeddable;
  *
  * @author Matthew.Crowell1@gmail.com
  */
-@Embeddable
 public enum VFRecordType {
 	UnknownAsset,
 	SavingsAccount,
@@ -30,5 +29,8 @@ public enum VFRecordType {
 	ContactInformation,
 	FinancialCard,
 	ATMCard,
-	DebitCard
+	DebitCard,
+	DocumentRecord,
+	NameRecord,
+	IdentificationDocumentRecord
 }

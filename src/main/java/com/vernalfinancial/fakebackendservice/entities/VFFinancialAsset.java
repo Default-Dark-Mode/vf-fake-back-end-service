@@ -26,7 +26,6 @@ import java.util.UUID;
 public abstract class VFFinancialAsset {
 	@Id
 	private String id;
-	@Embedded
 	private VFRecordType recordType;
 	@Embedded
 	@AttributeOverrides({

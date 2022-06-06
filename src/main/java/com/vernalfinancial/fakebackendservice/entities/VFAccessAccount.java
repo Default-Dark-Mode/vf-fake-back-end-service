@@ -21,18 +21,19 @@ public class VFAccessAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
-	@Embedded
 	private VFRecordType recordType;
 	@OneToOne
 	private VFLoginCredentials loginCredentials;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<VFLoginCredentials> historicalLoginCredentials;
 	@OneToOne
 	private VFIdentity identity;
 	@OneToOne
 	private VFContactInformation contactInformation;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<VFContactInformation> historicalContactInformation;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<VFFinancialAsset> assets;
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<VFFinancialCard> cards;
 }

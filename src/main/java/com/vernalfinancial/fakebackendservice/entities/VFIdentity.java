@@ -22,12 +22,13 @@ import java.util.Objects;
 public abstract class VFIdentity {
 	@Id
 	private String id;
-	@Embedded
 	private VFRecordType recordType;
 	@ManyToMany
 	private List<VFOrganization> associatedOrganizations;
 	@ManyToMany
 	private List<VFPerson> associatedPeople;
+	@OneToMany
+	private List<VFFinancialCard> cards;
 	@NotNull
 	private LocalDateTime createdAt;
 	@NotNull
@@ -39,7 +40,7 @@ public abstract class VFIdentity {
 	 * values for all the parameters.
 	 */
 	public VFIdentity() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	/**
@@ -50,10 +51,12 @@ public abstract class VFIdentity {
 	 * @param associatedOrganizations List<VFOrganization> the list of associated organizations
 	 * @param associatedPeople        List<VFPerson> the list of associated people
 	 */
-	public VFIdentity(List<VFOrganization> associatedOrganizations, List<VFPerson> associatedPeople) {
+	public VFIdentity(List<VFOrganization> associatedOrganizations, List<VFPerson> associatedPeople,
+					  List<VFFinancialCard> cards) {
 		this.recordType = VFRecordType.Identity;
 		this.associatedOrganizations = associatedOrganizations;
 		this.associatedPeople = associatedPeople;
+		this.cards = cards;
 		this.createdAt = LocalDateTime.now();
 		this.modifiedAt = LocalDateTime.now();
 	}

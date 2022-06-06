@@ -22,7 +22,6 @@ public class VFOrganizationalName {
 	private Integer id;
 	@NotNull
 	private String name;
-	@Embedded
 	private VFRecordType recordType;
 
 	/**

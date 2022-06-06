@@ -6,6 +6,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,7 +30,7 @@ public class VFATMCard extends VFFinancialCard {
 	 * values for all the parameters.
 	 */
 	public VFATMCard() {
-		this(null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -42,13 +43,19 @@ public class VFATMCard extends VFFinancialCard {
 	 * @param activated                    Boolean if the card has been activated
 	 * @param deactivated                  Boolean if the card has been deactivated
 	 * @param issuedTo                     VFIdentity the person or organization the card was issued to
+	 * @param authorizedUsers				List<VFPerson> the list of people authorized to use the card
 	 * @param replacementFee               VFMonetaryValue the cost of replacing the card
 	 * @param issuedDate                   LocalDateTime the timestamp for when the card was issued
 	 * @param expirationDate               LocalDateTime the timestamp for when the card expires
 	 * @param personalIdentificationNumber VFPersonalIdentificationNumber the pin established by the cardholder
 	 */
-	public VFATMCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, VFMonetaryValue replacementFee, LocalDateTime issuedDate, LocalDateTime expirationDate, VFPersonalIdentificationNumber personalIdentificationNumber) {
-		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, replacementFee, issuedDate, expirationDate);
+	public VFATMCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue,
+					 Boolean activated, Boolean deactivated, VFIdentity issuedTo,
+					 List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee,
+					 LocalDateTime issuedDate, LocalDateTime expirationDate, VFPersonalIdentificationNumber personalIdentificationNumber) {
+		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee,
+				issuedDate,
+				expirationDate);
 		this.setRecordType(VFRecordType.ATMCard);
 		this.personalIdentificationNumber = personalIdentificationNumber;
 	}

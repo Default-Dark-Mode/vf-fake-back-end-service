@@ -20,7 +20,6 @@ public class VFAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Embedded
 	private VFRecordType recordType;
 	@Pattern(regexp = "^\\d+$")
 	private Integer number;
@@ -31,7 +30,7 @@ public class VFAddress {
 	private String county;
 	@Pattern(regexp = "^[A-Z]{2}$")
 	private String state;
-	@Pattern(regexp = "^[a-zA-Z]+([a-zA-Z-\\s]*)$")
+	@Pattern(regexp = "^[A-Z].[a-zA-Z]+([a-zA-Z-\\s]*)$")
 	private String country;
 	@Pattern(regexp = "^\\d{5}(-\\d{4})?$")
 	private String postalCode;

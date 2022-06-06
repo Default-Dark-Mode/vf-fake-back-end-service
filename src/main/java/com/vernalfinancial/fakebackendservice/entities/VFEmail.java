@@ -21,7 +21,6 @@ public class VFEmail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Embedded
 	private VFRecordType recordType;
 	@NotNull
 	private Boolean verified;

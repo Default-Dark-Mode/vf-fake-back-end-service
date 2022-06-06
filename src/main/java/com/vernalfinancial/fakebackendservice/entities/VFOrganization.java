@@ -18,7 +18,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "organizations")
 public class VFOrganization extends VFIdentity {
-	@Embedded
 	private VFRecordType recordType;
 	@ManyToMany
 	private List<VFOrganizationalName> organizationalNames;

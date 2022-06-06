@@ -5,6 +5,7 @@ import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class maps to the representation of a
@@ -21,8 +22,11 @@ public class VFNaturalName {
 	private Integer id;
 	@NotNull
 	private String name;
-	@Embedded
 	private VFRecordType recordType;
+	@OneToMany(mappedBy = "naturalName")
+	private Set<VFPersonalName> personalNames;
+	@OneToMany(mappedBy = "name")
+	private Set<VFSurname> surnames;
 
 	/**
 	 * The default constructor for the VFNaturalName
@@ -30,7 +34,7 @@ public class VFNaturalName {
 	 * null values for all the parameters.
 	 */
 	public VFNaturalName() {
-		this(null);
+		this(null, null, null);
 	}
 
 	/**
@@ -40,8 +44,10 @@ public class VFNaturalName {
 	 *
 	 * @param name String the natural name
 	 */
-	public VFNaturalName(String name) {
+	public VFNaturalName(String name, Set<VFPersonalName> personalNames, Set<VFSurname> surnames) {
 		this.recordType = VFRecordType.PersonalName;
+		this.personalNames = personalNames;
+		this.surnames = surnames;
 		this.name = name;
 	}
 
@@ -67,27 +73,5 @@ public class VFNaturalName {
 
 	public void setRecordType(VFRecordType recordType) {
 		this.recordType = recordType;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		VFNaturalName that = (VFNaturalName) o;
-		return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && getRecordType() == that.getRecordType();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId(), getName(), getRecordType());
-	}
-
-	@Override
-	public String toString() {
-		return "natural_name{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", record_type=" + recordType +
-				'}';
 	}
 }

@@ -4,6 +4,7 @@ import com.vernalfinancial.fakebackendservice.models.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,7 +29,7 @@ public class VFDebitCard extends VFFinancialCard {
 	 * with null values for all the parameters.
 	 */
 	public VFDebitCard() {
-		this(null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -42,14 +43,20 @@ public class VFDebitCard extends VFFinancialCard {
 	 * @param activated             Boolean if the card has been activated
 	 * @param deactivated           Boolean if the card has been deactivated
 	 * @param issuedTo              VFIdentity the person or organization that was issued the card
+	 * @param authorizedUsers       List<VFPerson> the people authorized to use this card
 	 * @param replacementFee        VFMonetaryValue the cost of replacing the card
 	 * @param issuedDate            LocalDateTime the timestamp for when the card was issued
 	 * @param expirationDate        LocalDatetime the timestamp for when the card expires
 	 * @param source                VFCheckingAccount the checking account linked to the card
 	 * @param pin                   VFPersonalIdentificationNumber the pin established by the cardholder
 	 */
-	public VFDebitCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, VFMonetaryValue replacementFee, LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
-		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, replacementFee, issuedDate, expirationDate);
+	public VFDebitCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue,
+					   Boolean activated, Boolean deactivated, VFIdentity issuedTo,
+					   List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee,
+					   LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
+		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee,
+				issuedDate,
+				expirationDate);
 		this.setRecordType(VFRecordType.DebitCard);
 		this.source = source;
 		this.pin = pin;

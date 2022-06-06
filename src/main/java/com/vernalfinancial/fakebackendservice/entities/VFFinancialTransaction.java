@@ -22,7 +22,6 @@ public class VFFinancialTransaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Embedded
 	private VFRecordType recordType;
 	@NotNull
 	@ManyToOne

@@ -24,7 +24,6 @@ public class VFLoginCredentials {
 	private Integer id;
 	@NotNull
 	private Boolean deactivated;
-	@Embedded
 	private VFRecordType recordType;
 	@NotNull
 	private String username;

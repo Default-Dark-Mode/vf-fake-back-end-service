@@ -20,7 +20,6 @@ public class VFContactInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Embedded
 	private VFRecordType recordType;
 	@ManyToOne
 	private VFAddress primaryAddress;

@@ -20,7 +20,6 @@ public class VFTransactionStatus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Embedded
 	private VFRecordType recordType;
 	@NotNull
 	private String name;
