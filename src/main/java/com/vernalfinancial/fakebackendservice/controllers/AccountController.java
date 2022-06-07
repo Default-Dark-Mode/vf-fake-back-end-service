@@ -1,16 +1,14 @@
 package com.vernalfinancial.fakebackendservice.controllers;
 
-import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.services.AccountService;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.converters.models.PageableAsQueryParam;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * This class manages the routing of traffic and
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Matthew.Crowell1@gmail.com
  */
 @RestController
-@RequestMapping(path = "/accounts")
 @Slf4j
 @RequiredArgsConstructor
 public class AccountController {
@@ -34,7 +31,8 @@ public class AccountController {
 	 * @param count Integer the number of accounts to seed
 	 * @return ResponseEntity<Boolean> response entity and success indicator
 	 */
-	@GetMapping(path = "/seed")
+	@GetMapping(path = "/generator/accounts")
+	@ResponseBody
 	public ResponseEntity<Boolean> seedAccounts(@RequestParam(name = "count", required = false) Integer count) {
 		Boolean result = accountService.seedAccounts(count);
 		ResponseEntity<Boolean> response;
@@ -48,16 +46,4 @@ public class AccountController {
 		return response;
 	}
 
-	/**
-	 * This method receives get requests at the /accounts
-	 * path and returns a page of accounts.
-	 *
-	 * @param page Pageable page request specifications
-	 * @return ResponseEntity<Page < VFFinancialAsset>> results
-	 */
-	@GetMapping
-	@PageableAsQueryParam
-	public ResponseEntity<Page<VFFinancialAsset>> getAccounts(@Parameter(hidden = true) Pageable page) {
-		return new ResponseEntity<>(this.accountService.getAccounts(page), HttpStatus.OK);
-	}
 }
