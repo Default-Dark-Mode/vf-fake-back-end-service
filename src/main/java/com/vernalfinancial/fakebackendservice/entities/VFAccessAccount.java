@@ -1,6 +1,10 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,11 +21,15 @@ import java.util.List;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "access_accounts")
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public class VFAccessAccount {
+	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
-	private VFRecordType recordType;
 	@OneToOne
 	private VFLoginCredentials loginCredentials;
 	@OneToMany(fetch = FetchType.LAZY)
@@ -36,4 +44,8 @@ public class VFAccessAccount {
 	private List<VFFinancialAsset> assets;
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<VFFinancialCard> cards;
+
+	public VFAccessAccount() {
+		this.recordType = VFRecordType.AccessAccount;
+	}
 }

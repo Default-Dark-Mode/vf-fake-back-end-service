@@ -4,11 +4,14 @@ import com.vernalfinancial.fakebackendservice.models.VFCardVerificationValue;
 import com.vernalfinancial.fakebackendservice.models.VFFinancialCardNumber;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class serves as the abstract base class for
@@ -20,10 +23,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "financial_cards")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public abstract class VFFinancialCard {
+	private final VFRecordType recordType;
 	@Id
 	private String id;
-	private VFRecordType recordType;
 	@Embedded
 	private VFFinancialCardNumber cardNumber;
 	@Embedded
@@ -39,162 +46,8 @@ public abstract class VFFinancialCard {
 	private LocalDateTime issuedDate;
 	private LocalDateTime expirationDate;
 
-	/**
-	 * The default constructor for the VFFinancialCard
-	 * class calls the parameterized constructor with
-	 * null values for all the parameters.
-	 */
 	public VFFinancialCard() {
-		this(null, null, null, null, null, null, null, null, null);
-	}
-
-	/**
-	 * The parameterized constructor for the VFFinancialCard
-	 * class is the primary constructor and it will be called
-	 * by any other constructor in the class.
-	 *
-	 * @param cardNumber String the card number
-	 * @param cardVerificationValue String the card verification value
-	 * @param activated Boolean if the card has been activated
-	 * @param deactivated Boolean if the card has been deactivated
-	 * @param issuedTo VFIdentity the cardholder
-	 * @param authorizedUsers List<VFPerson> the list of authorized users
-	 * @param replacementFee VFMonetaryValue the fee for replacing the card
-	 * @param issuedDate LocalDateTime the timestamp for when the card was issued
-	 * @param expirationDate LocalDateTime the timestamp for when the card expires
-	 */
-	public VFFinancialCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue,
-						   Boolean activated, Boolean deactivated, VFIdentity issuedTo,
-						   List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee, LocalDateTime issuedDate,
-						   LocalDateTime expirationDate) {
-		this.recordType = VFRecordType.FinancialCard;
-		this.cardNumber = cardNumber;
-		this.cardVerificationValue = cardVerificationValue;
-		this.activated = activated;
-		this.deactivated = deactivated;
-		this.issuedTo = issuedTo;
-		this.authorizedUsers = authorizedUsers;
-		this.replacementFee = replacementFee;
-		this.issuedDate = issuedDate;
-		this.expirationDate = expirationDate;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public VFRecordType getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(VFRecordType recordType) {
-		this.recordType = recordType;
-	}
-
-	public VFFinancialCardNumber getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(VFFinancialCardNumber cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public VFCardVerificationValue getCardVerificationValue() {
-		return cardVerificationValue;
-	}
-
-	public void setCardVerificationValue(VFCardVerificationValue cardVerificationValue) {
-		this.cardVerificationValue = cardVerificationValue;
-	}
-
-	public Boolean getActivated() {
-		return activated;
-	}
-
-	public void setActivated(Boolean activated) {
-		this.activated = activated;
-	}
-
-	public Boolean getDeactivated() {
-		return deactivated;
-	}
-
-	public void setDeactivated(Boolean deactivated) {
-		this.deactivated = deactivated;
-	}
-
-	public VFIdentity getIssuedTo() {
-		return issuedTo;
-	}
-
-	public void setIssuedTo(VFIdentity issuedTo) {
-		this.issuedTo = issuedTo;
-	}
-
-	public List<VFPerson> getAuthorizedUsers() {
-		return authorizedUsers;
-	}
-
-	public void setAuthorizedUsers(List<VFPerson> authorizedUsers) {
-		this.authorizedUsers = authorizedUsers;
-	}
-
-	public VFMonetaryValue getReplacementFee() {
-		return replacementFee;
-	}
-
-	public void setReplacementFee(VFMonetaryValue replacementFee) {
-		this.replacementFee = replacementFee;
-	}
-
-	public LocalDateTime getIssuedDate() {
-		return issuedDate;
-	}
-
-	public void setIssuedDate(LocalDateTime issuedDate) {
-		this.issuedDate = issuedDate;
-	}
-
-	public LocalDateTime getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(LocalDateTime expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		VFFinancialCard that = (VFFinancialCard) o;
-		return Objects.equals(getId(), that.getId()) && getRecordType() == that.getRecordType() && Objects.equals(getCardNumber(), that.getCardNumber()) && Objects.equals(getCardVerificationValue(), that.getCardVerificationValue()) && Objects.equals(getActivated(), that.getActivated()) && Objects.equals(getDeactivated(), that.getDeactivated()) && Objects.equals(getIssuedTo(), that.getIssuedTo()) && Objects.equals(getAuthorizedUsers(), that.getAuthorizedUsers()) && Objects.equals(getReplacementFee(), that.getReplacementFee()) && Objects.equals(getIssuedDate(), that.getIssuedDate()) && Objects.equals(getExpirationDate(), that.getExpirationDate());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId(), getRecordType(), getCardNumber(), getCardVerificationValue(), getActivated(), getDeactivated(), getIssuedTo(), getAuthorizedUsers(), getReplacementFee(), getIssuedDate(), getExpirationDate());
-	}
-
-	@Override
-	public String toString() {
-		return "financial_card{" +
-				"id='" + id + '\'' +
-				", record_type=" + recordType +
-				", card_number=" + cardNumber +
-				", card_verification_value=" + cardVerificationValue +
-				", activated=" + activated +
-				", deactivated=" + deactivated +
-				", issued_to=" + issuedTo +
-				", authorized_users=" + authorizedUsers +
-				", replacement_fee=" + replacementFee +
-				", issued_date=" + issuedDate +
-				", expiration_date=" + expirationDate +
-				'}';
+		this(VFRecordType.FinancialCard, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**

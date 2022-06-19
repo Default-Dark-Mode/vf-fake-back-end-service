@@ -2,11 +2,13 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class represents a debit card as understood
@@ -18,6 +20,9 @@ import java.util.Objects;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "debit_cards")
+@Getter
+@Setter
+@Builder
 public class VFDebitCard extends VFFinancialCard {
 	@ManyToOne
 	@JoinColumn(name = "source_id")
@@ -32,7 +37,7 @@ public class VFDebitCard extends VFFinancialCard {
 	 * with null values for all the parameters.
 	 */
 	public VFDebitCard() {
-		this(null, null, null, null, null, null, null, null, null, null, null);
+		this(null, VFRecordType.DebitCard, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -41,6 +46,8 @@ public class VFDebitCard extends VFFinancialCard {
 	 * constructor and it will be called by
 	 * any other constructor in the class.
 	 *
+	 * @param id                    String the unique identifier for the card
+	 * @param recordType            VFRecordType the record type
 	 * @param cardNumber            String the debit card number
 	 * @param cardVerificationValue String the card verification value
 	 * @param activated             Boolean if the card has been activated
@@ -53,53 +60,9 @@ public class VFDebitCard extends VFFinancialCard {
 	 * @param source                VFCheckingAccount the checking account linked to the card
 	 * @param pin                   VFPersonalIdentificationNumber the pin established by the cardholder
 	 */
-	public VFDebitCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue,
-					   Boolean activated, Boolean deactivated, VFIdentity issuedTo,
-					   List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee,
-					   LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
-		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee,
-				issuedDate,
-				expirationDate);
-		this.setRecordType(VFRecordType.DebitCard);
+	public VFDebitCard(String id, VFRecordType recordType, VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee, LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
+		super(recordType, id, cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee, issuedDate, expirationDate);
 		this.source = source;
 		this.pin = pin;
-	}
-
-	public VFCheckingAccount getSource() {
-		return source;
-	}
-
-	public void setSource(VFCheckingAccount source) {
-		this.source = source;
-	}
-
-	public VFPersonalIdentificationNumber getPin() {
-		return pin;
-	}
-
-	public void setPin(VFPersonalIdentificationNumber pin) {
-		this.pin = pin;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		VFDebitCard that = (VFDebitCard) o;
-		return Objects.equals(getSource(), that.getSource()) && Objects.equals(getPin(), that.getPin());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), getSource(), getPin());
-	}
-
-	@Override
-	public String toString() {
-		return "debit_card{" +
-				"source=" + source +
-				", pin=" + pin +
-				"} " + super.toString();
 	}
 }

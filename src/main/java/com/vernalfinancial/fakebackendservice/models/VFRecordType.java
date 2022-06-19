@@ -1,7 +1,5 @@
 package com.vernalfinancial.fakebackendservice.models;
 
-import javax.persistence.Embeddable;
-
 /**
  * This class represents the type of a given
  * record in the database and can be used to
@@ -32,5 +30,7 @@ public enum VFRecordType {
 	DebitCard,
 	DocumentRecord,
 	NameRecord,
-	IdentificationDocumentRecord
+	IdentificationDocumentRecord,
+	AccessAccount,
+	NaturalName
 }

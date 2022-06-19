@@ -2,10 +2,16 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFOrganizationType;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class represents an organization as
@@ -17,8 +23,10 @@ import java.util.Objects;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "organizations")
+@Getter
+@Setter
+@Builder
 public class VFOrganization extends VFIdentity {
-	private VFRecordType recordType;
 	@ManyToMany
 	private List<VFOrganizationalName> organizationalNames;
 	private VFOrganizationType organizationType;
@@ -29,60 +37,12 @@ public class VFOrganization extends VFIdentity {
 	 * null values for all the parameters.
 	 */
 	public VFOrganization() {
-		this(null, null);
+		this(VFRecordType.Organization, null, null, null, null, null, null, null, null);
 	}
 
-	/**
-	 * The parameterized constructor for the VFOrganization
-	 * class it the primary constructor and will be called
-	 * by any other constructor in the class.
-	 *
-	 * @param organizationalNames List<VFOrganizationalName> the list of the organization's names
-	 * @param organizationType VFOrganizationType the type of the organization
-	 */
-	public VFOrganization(List<VFOrganizationalName> organizationalNames, VFOrganizationType organizationType) {
-		super();
-		this.recordType = VFRecordType.Organization;
+	public VFOrganization(VFRecordType recordType, String id, List<VFOrganization> associatedOrganizations, List<VFPerson> associatedPeople, List<VFFinancialCard> cards, @NotNull LocalDateTime createdAt, @NotNull LocalDateTime modifiedAt, List<VFOrganizationalName> organizationalNames, VFOrganizationType organizationType) {
+		super(recordType, id, associatedOrganizations, associatedPeople, cards, createdAt, modifiedAt);
 		this.organizationalNames = organizationalNames;
 		this.organizationType = organizationType;
-	}
-
-	public List<VFOrganizationalName> getOrganizationalNames() {
-		return organizationalNames;
-	}
-
-	public void setOrganizationalNames(List<VFOrganizationalName> organizationalNames) {
-		this.organizationalNames = organizationalNames;
-	}
-
-	public VFOrganizationType getOrganizationType() {
-		return organizationType;
-	}
-
-	public void setOrganizationType(VFOrganizationType organizationType) {
-		this.organizationType = organizationType;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		VFOrganization that = (VFOrganization) o;
-		return Objects.equals(getId(), that.getId()) && recordType == that.recordType && Objects.equals(getOrganizationalNames(), that.getOrganizationalNames()) && getOrganizationType() == that.getOrganizationType();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), getId(), recordType, getOrganizationalNames(), getOrganizationType());
-	}
-
-	@Override
-	public String toString() {
-		return "organization{" +
-				" record_type=" + recordType +
-				", organizational_names=" + organizationalNames +
-				", organization_type=" + organizationType +
-				'}';
 	}
 }

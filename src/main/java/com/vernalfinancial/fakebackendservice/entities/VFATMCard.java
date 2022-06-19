@@ -1,13 +1,15 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class represents an Automatic Teller
@@ -20,6 +22,9 @@ import java.util.Objects;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "atm_cards")
+@Getter
+@Setter
+@Builder
 public class VFATMCard extends VFFinancialCard {
 	@Embedded
 	private VFPersonalIdentificationNumber personalIdentificationNumber;
@@ -30,7 +35,7 @@ public class VFATMCard extends VFFinancialCard {
 	 * values for all the parameters.
 	 */
 	public VFATMCard() {
-		this(null, null, null, null, null, null, null, null, null, null);
+		this(VFRecordType.ATMCard, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -38,54 +43,21 @@ public class VFATMCard extends VFFinancialCard {
 	 * class is the primary constructor and will be
 	 * called by any other constructors in the class.
 	 *
+	 * @param id                           String the unique id of the carm
+	 * @param recordType                   VFRecordType the type of record
 	 * @param cardNumber                   String the 16-digit ATM card number
 	 * @param cardVerificationValue        String the number used to verify physical position of the card
 	 * @param activated                    Boolean if the card has been activated
 	 * @param deactivated                  Boolean if the card has been deactivated
 	 * @param issuedTo                     VFIdentity the person or organization the card was issued to
-	 * @param authorizedUsers				List<VFPerson> the list of people authorized to use the card
+	 * @param authorizedUsers              List<VFPerson> the list of people authorized to use the card
 	 * @param replacementFee               VFMonetaryValue the cost of replacing the card
 	 * @param issuedDate                   LocalDateTime the timestamp for when the card was issued
 	 * @param expirationDate               LocalDateTime the timestamp for when the card expires
 	 * @param personalIdentificationNumber VFPersonalIdentificationNumber the pin established by the cardholder
 	 */
-	public VFATMCard(VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue,
-					 Boolean activated, Boolean deactivated, VFIdentity issuedTo,
-					 List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee,
-					 LocalDateTime issuedDate, LocalDateTime expirationDate, VFPersonalIdentificationNumber personalIdentificationNumber) {
-		super(cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee,
-				issuedDate,
-				expirationDate);
-		this.setRecordType(VFRecordType.ATMCard);
+	public VFATMCard(VFRecordType recordType, String id, VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee, LocalDateTime issuedDate, LocalDateTime expirationDate, VFPersonalIdentificationNumber personalIdentificationNumber) {
+		super(recordType, id, cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee, issuedDate, expirationDate);
 		this.personalIdentificationNumber = personalIdentificationNumber;
-	}
-
-	public VFPersonalIdentificationNumber getPersonalIdentificationNumber() {
-		return personalIdentificationNumber;
-	}
-
-	public void setPersonalIdentificationNumber(VFPersonalIdentificationNumber personalIdentificationNumber) {
-		this.personalIdentificationNumber = personalIdentificationNumber;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		VFATMCard vfatmCard = (VFATMCard) o;
-		return Objects.equals(getPersonalIdentificationNumber(), vfatmCard.getPersonalIdentificationNumber());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), getPersonalIdentificationNumber());
-	}
-
-	@Override
-	public String toString() {
-		return "atm_card{" +
-				"personalIdentificationNumber=" + personalIdentificationNumber +
-				"} " + super.toString();
 	}
 }

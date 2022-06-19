@@ -1,6 +1,10 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,19 +13,23 @@ import java.util.Set;
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "name_records")
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public class VFNameRecord {
+	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private VFRecordType recordType;
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "name_records_to_personal_names_join_table",
-		joinColumns = {
-			@JoinColumn(name = "name_record_id", referencedColumnName = "id", nullable = false)
-		},
-		inverseJoinColumns = {
-			@JoinColumn(name = "personal_name_id", referencedColumnName = "id", nullable = false)
-		}
+			joinColumns = {
+					@JoinColumn(name = "name_record_id", referencedColumnName = "id", nullable = false)
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "personal_name_id", referencedColumnName = "id", nullable = false)
+			}
 	)
 	private Set<VFPersonalName> personalNames;
 	@ManyToOne
@@ -41,4 +49,8 @@ public class VFNameRecord {
 	private Set<VFIdentificationDocumentRecord> identificationDocument;
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;
+
+	public VFNameRecord() {
+		this(VFRecordType.NameRecord, null, null, null, null, null, null, null);
+	}
 }
