@@ -35,15 +35,15 @@ public class AccountController {
 	@ResponseBody
 	public ResponseEntity<Boolean> seedAccounts(@RequestParam(name = "count", required = false) Integer count) {
 		Boolean result = accountService.seedAccounts(count);
-		ResponseEntity<Boolean> response;
+		HttpStatus status;
 
 		if (result) {
-			response = new ResponseEntity<>(result, HttpStatus.CREATED);
+			status = HttpStatus.CREATED;
 		} else {
-			response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
-		return response;
+		return new ResponseEntity<>(result, status);
 	}
 
 }
