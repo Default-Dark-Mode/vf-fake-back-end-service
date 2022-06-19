@@ -5,10 +5,10 @@ import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.entities.VFSavingsAccount;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
+import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import com.vernalfinancial.fakebackendservice.repositories.VFCheckingAccountRepository;
 import com.vernalfinancial.fakebackendservice.repositories.VFFinancialAssetRepository;
 import com.vernalfinancial.fakebackendservice.repositories.VFSavingsAccountRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.UUID;
 
@@ -36,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
 	/**
 	 * This method is used to seed the database with either
-	 * the specified number of accounts (with a random
+	 * the specified number of accounts with a random
 	 * percentage being Checking and the rest being Savings
 	 * Accounts.  The number of accounts to seed can be
 	 * specified as an argument.
@@ -44,6 +45,7 @@ public class AccountServiceImpl implements AccountService {
 	 * @param count Integer the number of accounts to seed
 	 * @return Boolean whether the seeding was successful
 	 */
+	@SuppressWarnings("WrapperTypeMayBePrimitive")
 	@Override
 	public Boolean seedAccounts(Integer count) {
 		Boolean isSuccessful = false;
@@ -57,10 +59,10 @@ public class AccountServiceImpl implements AccountService {
 			for (int i = 1; i <= count; i++) {
 				int accountType = randomNumberGenerator.nextInt(2);
 				if (accountType == 0) {
-					VFSavingsAccount account = new VFSavingsAccount(generateUUID(), new VFBalance(false, 0, 0), false, LocalDateTime.now(), LocalDateTime.now(), 0, new VFBalance(false, 0, 0), new VFMonetaryValue(0, 0));
+					VFSavingsAccount account = new VFSavingsAccount(VFRecordType.SavingsAccount, generateUUID(), new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now(), 0, new VFBalance(false, 0, 0), new VFMonetaryValue(0, 0));
 					this.savingsAccountRepository.save(account);
 				} else {
-					VFCheckingAccount account = new VFCheckingAccount(generateUUID(), new VFBalance(false, 0, 0), false, LocalDateTime.now(), LocalDateTime.now(), new VFBalance(false, 50, 0), new VFMonetaryValue(30, 0));
+					VFCheckingAccount account = new VFCheckingAccount(VFRecordType.CheckingAccount, generateUUID(), new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now(), new VFBalance(false, 50, 0), new VFMonetaryValue(30, 0));
 					this.checkingAccountRepository.save(account);
 				}
 
