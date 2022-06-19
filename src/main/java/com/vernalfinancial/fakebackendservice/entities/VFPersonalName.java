@@ -1,8 +1,9 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,18 +25,19 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFPersonalName {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "name_id", nullable = false)
 	private VFNaturalName naturalName;
 	private Integer nameOrder;
 	@ManyToMany(mappedBy = "personalNames")
 	private Set<VFNameRecord> nameRecords;
+	@JsonBackReference
 	@OneToMany(mappedBy = "preferredName")
 	private Set<VFNameRecord> preferredNameRecords;
 	private LocalDateTime createdAt;

@@ -1,8 +1,10 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,28 +26,33 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFAccessAccount {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
+	@JsonIgnore
 	@OneToOne
 	private VFLoginCredentials loginCredentials;
-	@OneToMany(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@OneToMany(mappedBy = "accessAccount" , fetch = FetchType.LAZY)
 	private List<VFLoginCredentials> historicalLoginCredentials;
 	@OneToOne
 	private VFIdentity identity;
 	@OneToOne
 	private VFContactInformation contactInformation;
-	@OneToMany(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@OneToMany(mappedBy = "accessAccount", fetch = FetchType.LAZY)
 	private List<VFContactInformation> historicalContactInformation;
-	@OneToMany(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@OneToMany(mappedBy = "accessAccount", fetch = FetchType.LAZY)
 	private List<VFFinancialAsset> assets;
-	@OneToMany(fetch = FetchType.LAZY)
+	@JsonBackReference
+	@OneToMany(mappedBy = "accessAccount", fetch = FetchType.LAZY)
 	private List<VFFinancialCard> cards;
 
 	public VFAccessAccount() {
-		this.recordType = VFRecordType.AccessAccount;
+		this(VFRecordType.AccessAccount, null, null, null, null, null, null, null, null);
 	}
 }

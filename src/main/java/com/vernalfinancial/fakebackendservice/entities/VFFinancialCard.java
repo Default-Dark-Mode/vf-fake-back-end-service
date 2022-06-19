@@ -1,11 +1,11 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFCardVerificationValue;
 import com.vernalfinancial.fakebackendservice.models.VFFinancialCardNumber;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,8 +26,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public abstract class VFFinancialCard {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	private String id;
@@ -43,11 +43,18 @@ public abstract class VFFinancialCard {
 	private List<VFPerson> authorizedUsers;
 	@Embedded
 	private VFMonetaryValue replacementFee;
+	@JsonManagedReference
+	@ManyToOne
+	@JoinColumn(name = "access_account")
+	private VFAccessAccount accessAccount;
+	@JsonManagedReference
+	@ManyToOne
+	private VFIdentity associatedIdentities;
 	private LocalDateTime issuedDate;
 	private LocalDateTime expirationDate;
 
 	public VFFinancialCard() {
-		this(VFRecordType.FinancialCard, null, null, null, null, null, null, null, null, null, null);
+		this(VFRecordType.FinancialCard, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**

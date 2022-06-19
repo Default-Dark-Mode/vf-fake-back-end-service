@@ -1,9 +1,9 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFLoginCredentials {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +35,11 @@ public class VFLoginCredentials {
 	@NotNull
 	private String username;
 	@NotNull
-	@JsonBackReference
+	@JsonIgnore
 	private String securedPassword;
+	@JsonManagedReference
+	@ManyToOne
+	private VFAccessAccount accessAccount;
 	@NotNull
 	private LocalDateTime createdAt;
 
@@ -46,6 +49,6 @@ public class VFLoginCredentials {
 	 * values for all parameters.
 	 */
 	public VFLoginCredentials() {
-		this(VFRecordType.LoginCredentials, null, null, null, null, null);
+		this(VFRecordType.LoginCredentials, null, null, null, null, null, null);
 	}
 }

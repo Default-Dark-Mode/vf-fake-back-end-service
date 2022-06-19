@@ -1,8 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,8 +24,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public abstract class VFIdentity {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	private String id;
@@ -33,8 +33,9 @@ public abstract class VFIdentity {
 	private List<VFOrganization> associatedOrganizations;
 	@ManyToMany
 	private List<VFPerson> associatedPeople;
-	@OneToMany
-	private List<VFFinancialCard> cards;
+	@JsonBackReference
+	@OneToMany(mappedBy = "associatedIdentities")
+	private List<VFFinancialCard> associatedCards;
 	@NotNull
 	private LocalDateTime createdAt;
 	@NotNull

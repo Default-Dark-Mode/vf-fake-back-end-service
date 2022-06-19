@@ -2,7 +2,6 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,17 +23,16 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFSurname {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne
-	@JoinColumn(name = "name_id", nullable = false)
 	private VFNaturalName name;
 	private Integer nameOrder;
-	@ManyToMany(mappedBy = "surnames")
+	@ManyToMany
 	private Set<VFNameRecord> nameRecords;
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;

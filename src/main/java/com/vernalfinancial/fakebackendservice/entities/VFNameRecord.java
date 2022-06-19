@@ -1,8 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,35 +16,19 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFNameRecord {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "name_records_to_personal_names_join_table",
-			joinColumns = {
-					@JoinColumn(name = "name_record_id", referencedColumnName = "id", nullable = false)
-			},
-			inverseJoinColumns = {
-					@JoinColumn(name = "personal_name_id", referencedColumnName = "id", nullable = false)
-			}
-	)
 	private Set<VFPersonalName> personalNames;
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "preferred_name_id")
 	private VFPersonalName preferredName;
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "name_records_to_surnames_join_table",
-			joinColumns = {
-					@JoinColumn(name = "name_record_id", referencedColumnName = "id", nullable = false)
-			},
-			inverseJoinColumns = {
-					@JoinColumn(name = "surname_id", referencedColumnName = "id", nullable = false)
-			}
-	)
-	private Set<VFPersonalName> surnames;
+	@ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "nameRecords")
+	private Set<VFSurname> surnames;
 	@OneToMany(mappedBy = "nameRecord")
 	private Set<VFIdentificationDocumentRecord> identificationDocument;
 	private LocalDateTime createdAt;

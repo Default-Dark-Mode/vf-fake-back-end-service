@@ -1,5 +1,6 @@
 package com.vernalfinancial.fakebackendservice.services;
 
+import com.vernalfinancial.fakebackendservice.entities.VFAccessAccount;
 import com.vernalfinancial.fakebackendservice.entities.VFCheckingAccount;
 import com.vernalfinancial.fakebackendservice.entities.VFFinancialAsset;
 import com.vernalfinancial.fakebackendservice.entities.VFSavingsAccount;
@@ -59,10 +60,16 @@ public class AccountServiceImpl implements AccountService {
 			for (int i = 1; i <= count; i++) {
 				int accountType = randomNumberGenerator.nextInt(2);
 				if (accountType == 0) {
-					VFSavingsAccount account = new VFSavingsAccount(VFRecordType.SavingsAccount, generateUUID(), new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now(), 0, new VFBalance(false, 0, 0), new VFMonetaryValue(0, 0));
+					VFSavingsAccount account = new VFSavingsAccount(VFRecordType.SavingsAccount, generateUUID(),
+							new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(),
+							null, LocalDateTime.now(), LocalDateTime.now(), 0, new VFBalance(false, 0, 0),
+							new VFMonetaryValue(0, 0));
 					this.savingsAccountRepository.save(account);
 				} else {
-					VFCheckingAccount account = new VFCheckingAccount(VFRecordType.CheckingAccount, generateUUID(), new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now(), new VFBalance(false, 50, 0), new VFMonetaryValue(30, 0));
+					VFCheckingAccount account = new VFCheckingAccount(VFRecordType.CheckingAccount, generateUUID(),
+							new VFBalance(false, 0, 0), false, new HashSet<>(), new HashSet<>(), null,
+							LocalDateTime.now(), LocalDateTime.now(), new VFBalance(false, 50, 0),
+							new VFMonetaryValue(30, 0), null);
 					this.checkingAccountRepository.save(account);
 				}
 

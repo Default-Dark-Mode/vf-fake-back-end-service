@@ -2,7 +2,6 @@ package com.vernalfinancial.fakebackendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,11 +21,10 @@ import java.util.List;
 @Table(name = "debit_cards")
 @Getter
 @Setter
-@Builder
 public class VFDebitCard extends VFFinancialCard {
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "source_id")
-	@JsonManagedReference
 	private VFCheckingAccount source;
 	@Embedded
 	private VFPersonalIdentificationNumber pin;
@@ -37,7 +35,8 @@ public class VFDebitCard extends VFFinancialCard {
 	 * with null values for all the parameters.
 	 */
 	public VFDebitCard() {
-		this(null, VFRecordType.DebitCard, null, null, null, null, null, null, null, null, null, null, null);
+		this(VFRecordType.DebitCard, null, null, null, null, null, null, null, null, null, null, null, null, null,
+				null);
 	}
 
 	/**
@@ -55,13 +54,14 @@ public class VFDebitCard extends VFFinancialCard {
 	 * @param issuedTo              VFIdentity the person or organization that was issued the card
 	 * @param authorizedUsers       List<VFPerson> the people authorized to use this card
 	 * @param replacementFee        VFMonetaryValue the cost of replacing the card
+	 * @param accessAccount         VFAccessAccount the member account that owns the card
 	 * @param issuedDate            LocalDateTime the timestamp for when the card was issued
 	 * @param expirationDate        LocalDatetime the timestamp for when the card expires
 	 * @param source                VFCheckingAccount the checking account linked to the card
 	 * @param pin                   VFPersonalIdentificationNumber the pin established by the cardholder
 	 */
-	public VFDebitCard(String id, VFRecordType recordType, VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee, LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
-		super(recordType, id, cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee, issuedDate, expirationDate);
+	public VFDebitCard(VFRecordType recordType, String id, VFFinancialCardNumber cardNumber, VFCardVerificationValue cardVerificationValue, Boolean activated, Boolean deactivated, VFIdentity issuedTo, List<VFPerson> authorizedUsers, VFMonetaryValue replacementFee, VFAccessAccount accessAccount, VFIdentity associatedIdentities, LocalDateTime issuedDate, LocalDateTime expirationDate, VFCheckingAccount source, VFPersonalIdentificationNumber pin) {
+		super(recordType, id, cardNumber, cardVerificationValue, activated, deactivated, issuedTo, authorizedUsers, replacementFee, accessAccount, associatedIdentities, issuedDate, expirationDate);
 		this.source = source;
 		this.pin = pin;
 	}

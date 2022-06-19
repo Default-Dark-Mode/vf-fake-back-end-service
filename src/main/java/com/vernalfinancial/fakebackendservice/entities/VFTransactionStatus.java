@@ -3,7 +3,6 @@ package com.vernalfinancial.fakebackendservice.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,8 +21,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFTransactionStatus {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

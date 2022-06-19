@@ -1,8 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,17 +22,33 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFNaturalName {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotNull
 	private String name;
-	@OneToMany(mappedBy = "naturalName")
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "personal_names_to_natural_names_join_table",
+			joinColumns = {
+					@JoinColumn(name = "natural_name_id", referencedColumnName = "id", nullable = false)
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "personal_name_id", referencedColumnName = "id", nullable = false)
+			}
+	)
 	private Set<VFPersonalName> personalNames;
-	@OneToMany(mappedBy = "name")
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "surnames_to_natural_names_join_table",
+			joinColumns = {
+					@JoinColumn(name = "natural_name_id", referencedColumnName = "id", nullable = false)
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "surname_id", referencedColumnName = "id", nullable = false)
+			}
+	)
 	private Set<VFSurname> surnames;
 
 	public VFNaturalName() {

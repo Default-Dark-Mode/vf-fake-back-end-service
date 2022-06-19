@@ -3,7 +3,6 @@ package com.vernalfinancial.fakebackendservice.entities;
 import com.vernalfinancial.fakebackendservice.models.VFDocumentType;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,12 +15,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFDocumentRecord {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	private String id;
 	private String title;
+	@Enumerated(value = EnumType.STRING)
 	private VFDocumentType documentType;
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;

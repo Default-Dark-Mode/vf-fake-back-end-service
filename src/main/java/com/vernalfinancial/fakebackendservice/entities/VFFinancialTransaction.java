@@ -1,11 +1,11 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,30 +26,29 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFFinancialTransaction {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotNull
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "origin_id", nullable = false)
-	@JsonBackReference
 	private VFFinancialAsset origin;
 	@NotNull
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "destination_id", nullable = false)
-	@JsonBackReference
 	private VFFinancialAsset destination;
 	@NotNull
 	@Embedded
 	private VFMonetaryValue amount;
 	@NotNull
-	@ManyToOne
 	@JsonManagedReference
-	@JoinTable(name = "transaction_statuses")
-	@JoinColumn(name = "status_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name = "status_id")
 	private VFTransactionStatus status;
 	@NotNull
 	private LocalDateTime createdAt;

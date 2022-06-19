@@ -1,10 +1,10 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,8 +29,8 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public abstract class VFFinancialAsset {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	private String id;
@@ -40,12 +40,16 @@ public abstract class VFFinancialAsset {
 	private VFBalance balance;
 	@NotNull
 	private Boolean closed;
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "origin")
 	private Set<VFFinancialTransaction> outgoingTransactions;
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "destination")
 	private Set<VFFinancialTransaction> incomingTransactions;
+	@JsonManagedReference
+	@ManyToOne
+	@JoinColumn(name = "access_account")
+	private VFAccessAccount accessAccount;
 	@NotNull
 	private LocalDateTime createdAt;
 	@NotNull
@@ -58,7 +62,7 @@ public abstract class VFFinancialAsset {
 	 * record type.
 	 */
 	public VFFinancialAsset() {
-		this(VFRecordType.UnknownAsset, null, null, false, null, null, null, null);
+		this(VFRecordType.UnknownAsset, null, null, false, null, null, null, null, null);
 	}
 
 }

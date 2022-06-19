@@ -1,7 +1,7 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +23,8 @@ import java.util.List;
 @Table(name = "people")
 @Getter
 @Setter
-@Builder
 public class VFPerson extends VFIdentity {
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "name_record_id", nullable = false)
 	private VFNameRecord nameRecord;

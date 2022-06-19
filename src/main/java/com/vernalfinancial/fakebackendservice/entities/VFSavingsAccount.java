@@ -4,7 +4,6 @@ package com.vernalfinancial.fakebackendservice.entities;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +24,8 @@ import java.util.Set;
 @Table(name = "savings_accounts")
 @Getter
 @Setter
-@Builder
 public class VFSavingsAccount extends VFFinancialAsset {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType = VFRecordType.SavingsAccount;
 	@NotNull
 	private Integer annualPercentageRate;
@@ -40,11 +39,11 @@ public class VFSavingsAccount extends VFFinancialAsset {
 	private VFMonetaryValue insufficientFundsFee;
 
 	public VFSavingsAccount() {
-		this(VFRecordType.SavingsAccount, null, null, null, null, null, null, null, null, null, null);
+		this(VFRecordType.SavingsAccount, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
-	public VFSavingsAccount(VFRecordType recordType, String id, @NotNull VFBalance balance, @NotNull Boolean closed, Set<VFFinancialTransaction> outgoingTransactions, Set<VFFinancialTransaction> incomingTransactions, @NotNull LocalDateTime createdAt, @NotNull LocalDateTime modifiedAt, Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
-		super(recordType, id, balance, closed, outgoingTransactions, incomingTransactions, createdAt, modifiedAt);
+	public VFSavingsAccount(VFRecordType recordType, String id, @NotNull VFBalance balance, @NotNull Boolean closed, Set<VFFinancialTransaction> outgoingTransactions, Set<VFFinancialTransaction> incomingTransactions, VFAccessAccount accessAccount, @NotNull LocalDateTime createdAt, @NotNull LocalDateTime modifiedAt, Integer annualPercentageRate, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
+		super(recordType, id, balance, closed, outgoingTransactions, incomingTransactions, accessAccount, createdAt, modifiedAt);
 		this.annualPercentageRate = annualPercentageRate;
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;

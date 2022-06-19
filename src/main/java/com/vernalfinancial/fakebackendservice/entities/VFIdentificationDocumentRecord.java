@@ -1,8 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFDocumentType;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 @Table(name = "identification_document_records")
 @Getter
 @Setter
-@Builder
 public class VFIdentificationDocumentRecord extends VFDocumentRecord {
 	private String identificationNumber;
 	private LocalDateTime issuedDate;
 	private LocalDateTime expirationDate;
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "name_record_id")
 	private VFNameRecord nameRecord;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vernalfinancial.fakebackendservice.models.VFBalance;
 import com.vernalfinancial.fakebackendservice.models.VFMonetaryValue;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +24,6 @@ import java.util.Set;
 @Table(name = "checking_accounts")
 @Getter
 @Setter
-@Builder
 public class VFCheckingAccount extends VFFinancialAsset {
 	@NotNull
 	@Embedded
@@ -35,8 +33,8 @@ public class VFCheckingAccount extends VFFinancialAsset {
 	@Embedded
 	@AttributeOverrides({@AttributeOverride(name = "dollars", column = @Column(name = "insufficient_funds_fee_dollars")), @AttributeOverride(name = "cents", column = @Column(name = "insufficient_funds_fee_cents"))})
 	private VFMonetaryValue insufficientFundsFee;
-	@OneToMany(mappedBy = "source")
 	@JsonBackReference
+	@OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
 	private Set<VFDebitCard> debitCards;
 
 	/**
@@ -45,7 +43,7 @@ public class VFCheckingAccount extends VFFinancialAsset {
 	 * with null values for all parameters.
 	 */
 	public VFCheckingAccount() {
-		this(VFRecordType.CheckingAccount, null, null, null, null, null, null, null, null, null);
+		this(VFRecordType.CheckingAccount, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	/**
@@ -64,9 +62,10 @@ public class VFCheckingAccount extends VFFinancialAsset {
 	 * @param minimumBalance       VFBalance the minimum acceptable balance
 	 * @param insufficientFundsFee VFMonetaryValue the amount of insufficient funds fees
 	 */
-	public VFCheckingAccount(VFRecordType recordType, String id, VFBalance balance, Boolean closed, Set<VFFinancialTransaction> outgoingTransactions, Set<VFFinancialTransaction> incomingTransactions, LocalDateTime createdAt, LocalDateTime modifiedAt, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee) {
-		super(recordType, id, balance, closed, outgoingTransactions, incomingTransactions, createdAt, modifiedAt);
+	public VFCheckingAccount(VFRecordType recordType, String id, @NotNull VFBalance balance, @NotNull Boolean closed, Set<VFFinancialTransaction> outgoingTransactions, Set<VFFinancialTransaction> incomingTransactions, VFAccessAccount accessAccount, @NotNull LocalDateTime createdAt, @NotNull LocalDateTime modifiedAt, VFBalance minimumBalance, VFMonetaryValue insufficientFundsFee, Set<VFDebitCard> debitCards) {
+		super(recordType, id, balance, closed, outgoingTransactions, incomingTransactions, accessAccount, createdAt, modifiedAt);
 		this.minimumBalance = minimumBalance;
 		this.insufficientFundsFee = insufficientFundsFee;
+		this.debitCards = debitCards;
 	}
 }

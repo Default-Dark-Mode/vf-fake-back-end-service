@@ -1,8 +1,8 @@
 package com.vernalfinancial.fakebackendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vernalfinancial.fakebackendservice.models.VFRecordType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,20 +22,26 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class VFContactInformation {
+	@Enumerated(value = EnumType.STRING)
 	private final VFRecordType recordType;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@JsonManagedReference
 	@ManyToOne
 	private VFAddress primaryAddress;
+	@JsonManagedReference
 	@ManyToOne
 	private VFPhone primaryNumber;
+	@JsonManagedReference
 	@ManyToOne
 	private VFEmail primaryEmail;
+	@JsonManagedReference
+	@ManyToOne
+	private VFAccessAccount accessAccount;
 
 	public VFContactInformation() {
-		this(VFRecordType.ContactInformation, null, null, null, null);
+		this(VFRecordType.ContactInformation, null, null, null, null, null);
 	}
 }
